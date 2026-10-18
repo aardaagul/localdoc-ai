@@ -1,0 +1,1 @@
+"""İş (business) mantığı servisleri."""

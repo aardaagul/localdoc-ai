@@ -1,0 +1,1 @@
+"""İstek/yanıt şemaları (Pydantic)."""
