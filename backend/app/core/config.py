@@ -41,7 +41,8 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://localhost:11434"
     ollama_chat_model: str = "llama3.2"
     ollama_embed_model: str = "nomic-embed-text"
-    ollama_timeout: float = 120.0
+    # İlk istekte model belleğe yüklenirken uzun sürebilir; cömert tutuldu.
+    ollama_timeout: float = 300.0
 
     # RAG / arama
     chunk_size: int = 1000

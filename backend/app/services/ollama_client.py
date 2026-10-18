@@ -87,6 +87,13 @@ class OllamaClient:
                 response = await client.post(f"{self.base_url}/api/chat", json=payload)
                 response.raise_for_status()
                 data = response.json()
+        except httpx.TimeoutException as exc:
+            raise OllamaError(
+                f"Yerel model ('{self.chat_model}') {self.timeout:.0f} saniyede yanıt vermedi. "
+                "İlk soruda model belleğe yükleniyor olabilir: birkaç saniye sonra tekrar "
+                "deneyin. Sorun sürerse OLLAMA_TIMEOUT değerini artırın veya daha küçük bir "
+                f"model seçin. Ayrıntı: {exc}"
+            ) from exc
         except httpx.HTTPError as exc:
             raise OllamaError(
                 f"Yerel sohbet modeli yanıt vermedi ('{self.chat_model}'). "
@@ -107,6 +114,11 @@ class OllamaClient:
                 response = await client.post(f"{self.base_url}/api/embed", json=payload)
                 response.raise_for_status()
                 data = response.json()
+        except httpx.TimeoutException as exc:
+            raise OllamaError(
+                f"Embedding modeli ('{self.embed_model}') zaman aşımına uğradı. "
+                f"Ayrıntı: {exc}"
+            ) from exc
         except httpx.HTTPError as exc:
             raise OllamaError(
                 f"Embedding modeli çalıştırılamadı ('{self.embed_model}'). Ayrıntı: {exc}"

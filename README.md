@@ -269,6 +269,18 @@ Test soruları, beklenen davranış ve sonuç tablosu: **[docs/evaluation.md](do
 
 ---
 
+## 🩺 Sorun Giderme
+
+| Belirti | Çözüm |
+| --- | --- |
+| İlk soru **HTTP 503** dönüyor ("zaman aşımına uğradı") | Model o an belleğe yükleniyor. Birkaç saniye sonra tekrar sorun. Sürerse `OLLAMA_TIMEOUT` değerini artırın (bkz. `backend/.env.example`). |
+| Sağlık rozeti **"Ollama kapalı"** | `ollama list` ile modelin indiğini, `ollama serve`'in çalıştığını doğrulayın (`http://localhost:11434/api/tags`). |
+| Cevaplar hep **"yeterli bilgi bulunamadı"** | Belgede ilgili bilgi yok ya da `MIN_RELEVANCE_SCORE` / `MIN_SEMANTIC_SCORE` çok yüksek; düşürerek deneyin. |
+| Arayüz backend'e ulaşamıyor | Backend portu ile `frontend/.env` içindeki `VITE_PROXY_TARGET` birbiriyle eşleşmeli (bu makinede backend `8010`). |
+| PDF'ten metin çıkmıyor | Taranmış (görüntü) PDF'ler OCR gerektirir; bu sürümde desteklenmiyor. |
+
+---
+
 ## ⚠️ Bilinen Kısıtlar
 
 - **OCR yok:** Taranmış (görüntü) PDF'lerden metin çıkarılamaz; sistem bunu hata olarak bildirir.
